@@ -1,44 +1,110 @@
-# Repositorio de Licitaciones y Resoluciones - LegalInnova
 
-Este repositorio contiene la estructura de datos, documentación y scripts para la automatización de la captura de licitaciones públicas y resoluciones de tribunales administrativos.
+Repositorio de Licitaciones y Resoluciones – LegalInnova
 
-## 1. Estructura del Proyecto
+Este repositorio contiene la estructura de datos, documentación y scripts para la captura, almacenamiento y futura automatización de:
 
-El repositorio está organizado de la siguiente manera:
+Licitaciones públicas (plataformas estatal y autonómicas)
 
-- **/datos**: Contiene los archivos CSV/Excel con las licitaciones descargadas.
-- **/resoluciones**: Repositorio de documentos PDF organizados por origen.
-  - `/central`: Resoluciones del TACRC.
-  - `/ccaa`: Resoluciones autonómicas organizadas por Comunidad (ej. /madrid, /cataluna).
-- **/scripts**: (En desarrollo) Código Python para la actualización automática.
-- **/docs**: Documentación técnica adicional.
+Resoluciones de tribunales administrativos de recursos contractuales
 
-## 2. Esquema de Datos Propuesto
+El objetivo es construir una base de datos estructurada, ampliable y automatizable para su posterior análisis y explotación.
 
-### A. Base de Datos de Licitaciones
-Los archivos CSV en `/datos` siguen esta estructura de columnas:
+1. Estructura del Proyecto
+/datos              → Archivos CSV con las licitaciones
+/resoluciones       → PDFs organizados por órgano
+    /central        → TACRC
+    /ccaa           → Tribunales autonómicos
+        /CAT
+        /GAL
+        /EUS
+        /MAD
+/scripts            → Scripts Python de actualización (en desarrollo)
+/docs               → Documentación técnica (esquema de datos, decisiones de diseño)
 
-| Campo | Tipo | Descripción |
-| :--- | :--- | :--- |
-| `id_licitacion` | Texto | Identificador único de la plataforma |
-| `organo_contratacion` | Texto | Entidad que licita (ej. Ayuntamiento de Madrid) |
-| `objeto` | Texto | Descripción breve del contrato |
-| `cpv` | Numérico | Código CPV (si está disponible) |
-| `tipo_contrato` | Texto | Servicios, Obras, Suministros |
-| `procedimiento` | Texto | Abierto, Restringido, Negociado... |
-| `presupuesto_base` | Moneda | Presupuesto sin impuestos |
-| `fecha_publicacion` | Fecha | DD/MM/AAAA |
-| `fecha_limite` | Fecha | DD/MM/AAAA (Deadline) |
-| `enlace_oficial` | URL | Link a la plataforma de contratación |
+2. Esquema de Datos
+2. Esquema de Datos
+A. Base de Datos de Licitaciones
 
-### B. Metadatos de Resoluciones
-Cada PDF en la carpeta `/resoluciones` tendrá un archivo JSON asociado con:
+Los archivos en /datos siguen la siguiente estructura:
 
-- **Organo:** (ej. TARC Cataluña)
-- **Nº Resolución:** (ej. 123/2023)
-- **Sentido:** (Estimación / Desestimación / Inadmisión)
-- **Acto Recurrido:** (Pliegos / Adjudicación / Exclusión)
+Campo	Tipo	Descripción
+id_licitacion	Texto	Identificador único de la plataforma
+organo_contratacion	Texto	Entidad que licita
+objeto	Texto	Descripción del contrato
+cpv	Texto	Código CPV
+tipo_contrato	Texto	Servicios / Obras / Suministros / Concesión
+procedimiento	Texto	Abierto / Abierto simplificado / Restringido / Negociado
+presupuesto_base	Numérico	Presupuesto sin impuestos
+fecha_publicacion	Fecha	YYYY-MM-DD
+fecha_limite	Fecha	YYYY-MM-DD
+enlace_oficial	URL	Enlace directo a la licitación
+Tipologías normalizadas
 
-## 3. Próximos Pasos
-- [ ] Desarrollo del script de "Web Scraping" para la Plataforma del Estado.
-- [ ] Automatización de la descarga de PDFs del TACRC.
+Se han definido valores homogéneos para:
+
+Tipo de contrato
+
+Servicios
+
+Obras
+
+Suministros
+
+Concesión de servicios
+
+Concesión de obras
+
+Procedimiento
+
+Abierto
+
+Abierto simplificado
+
+Restringido
+
+Negociado sin publicidad
+
+Acuerdo Marco
+
+B. Metadatos de Resoluciones
+
+Cada PDF tendrá un archivo JSON asociado con:
+
+órgano
+
+numero_resolucion
+
+fecha
+
+sentido (estimación / desestimación / inadmisión)
+
+acto_recurrido
+
+tipo_contrato
+
+enlace_origen
+
+3. Objetivo Técnico
+
+El sistema debe permitir:
+
+Comparación entre plataformas
+
+Filtrado por tipo, fecha o procedimiento
+
+Actualización automática (diaria o semanal)
+
+Detección de duplicados
+
+Registro de nuevos elementos añadidos
+
+4. Próximos pasos
+
+Desarrollo del script de actualización para la Plataforma del Estado.
+
+Automatización de descarga y registro de resoluciones del TACRC.
+
+Migración futura a base de datos SQLite.
+
+
+
